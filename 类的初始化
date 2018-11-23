@@ -1,0 +1,40 @@
+类的初始化块
+可以在类中使用“{”和“}”将语句包围起来，直接将其作为类的成员。
+
+类的这种“没有名字”的“成员”，多用于初始化类的字段。
+
+  public class Test {
+          public int value=200;
+          {
+              value=100;          // 类的初始化块
+          }
+  }
+​ 如果一个类中既有初始化块，又有构造方法，同时还设定了字段的初始值，谁说了算？
+
+    class InitializeBlockClass {
+        {
+          field = 200;
+        }
+        public int field = 100;
+        public InitializeBlockClass(int value) {
+          this.field = value;
+        }
+        public InitializeBlockClass() {
+          
+        }
+    }
+这是一个生造出来展示Java语法特性的示例类，在实际开发中不要这样写代码，应该尽量保证一个字段只初始化一次！
+
+​ 如果使用上面定义的类，思考一下代码的输出结果：
+
+    public static void main(String[] args) {
+      InitializeBlockClass obj = new InitializeBlockClass();
+      System.out.println(obj.field);  //？
+      obj = new InitializeBlockClass(300);
+      System.out.println(obj.field);  //？
+    }
+规律（类字段的初始化顺序）
+
+执行类成员定义时指定的默认值或类的初始化块，到底执行哪一个要看哪一个“排在前面”。
+执行类的构造函数。
+类的初始化块不接收任何的参数，而且只要一创建类的对象，它们就会被执行。因此，适合于封装那些“对象创建时必须执行的代码”。
