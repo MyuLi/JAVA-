@@ -1,0 +1,72 @@
+  ●     静态代码块只能定义在类里面，它独立于任何方法，不能定义在方法里面。
+
+  ●     静态代码块里面的变量都是局部变量，只在本块内有效。
+
+  ●     静态代码块会在类被加载时自动执行，而无论加载者是JVM还是其他的类。
+
+  ●     一个类中允许定义多个静态代码块，执行的顺序根据定义的顺序进行。
+
+  ●     静态代码块只能访问类的静态成员，而不允许访问实例成员。
+
+ static 声明一个对象，不实例化则不能调用内部的实例方法，这说明尽管stVar被声明成static类型，系统仍然不会自动为它创建对象，所以程序必须改成如下内容才能正常运行：
+
+ public class hasStatMember{
+
+      static  supplyTest  stVar;     //定义一个静态成员
+
+      public static void main(String args[]){
+
+               stVar.statShow();           //调用静态方法
+
+               stVar.instShow();           //调用实例方法
+
+      }
+
+}
+结果：
+这是静态方法
+
+Exception in thread "main" java.lang.NullPointerException
+
+        at hasStatMember.main(hasStatMember.java:5)
+        
+ 实例化静态对象后
+ public class hasStatMember{
+
+        static supplyTest stVar = new supplyTest();     //定义一个静态成员并实例化它
+
+        public static void main(String args[]){
+
+                   stVar.statShow();                             //调用静态方法
+
+                  stVar.instShow();                             //调用实例方法
+
+        }
+
+}
+
+还有一种方法
+
+public class useStVar{
+
+          public static void main(String args[]){   
+
+                     hasStatMember.stVar.statShow();     //调用静态方法
+
+                     hasStatMember.stVar.instShow();     //调用实例方法
+
+          }
+
+}
+
+//-----------文件名useStVar.java-----------------
+
+程序的输出结果如下：
+
+这是静态方法
+
+这是实例方法
+
+无论是静态方法还是实例方法，都是通过“类名.静态变量名.方法名”的形式来使用的。读者可能会觉得这种形式有点眼熟。
+确实如此，前面大量使用的“System.out.println”就是这种形式。
+其中，System是系统预定义好的一个类，out是它的一个静态成员，println是out的一个实例方法。
